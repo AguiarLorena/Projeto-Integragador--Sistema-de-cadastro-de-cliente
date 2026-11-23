@@ -19,8 +19,8 @@ public class Main_estudantes {
      */
     public static void main(String[] args) {
         // Matrizes criadas localmente (não são globais)
-        String[][] matrizClientes = new String[0][8];
-        String[][] matrizContatos = new String[0][5];
+        String[][] matrizClientes = carregarClientesCSV(); // TEMPORÁRIO: só para testar
+        String[][] matrizContatos = carregarContatosCSV(); // TEMPORÁRIO: só para testar
 
         System.out.println("================================================");
         System.out.println(" SISTEMA DE CADASTRO DE CLIENTES e CONTATOS ");
