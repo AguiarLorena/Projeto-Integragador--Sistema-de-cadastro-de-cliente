@@ -12,7 +12,7 @@ import java.io.IOException;
  * - Matriz de Clientes: String[linhas][8 colunas]
  * - Matriz de Contatos: String[linhas][5 colunas]
  */
-public class Main_estudantes {
+public class SistemaDeCadastro {
 
     /**
      * Método principal
@@ -63,11 +63,11 @@ public class Main_estudantes {
 
                             switch (opcaoCliente) {
                                 case 1:
-                                    System.out.println("\n(Incluir cliente - em construção)");
+                                    matrizClientes = incluirCliente(scanner, matrizClientes);
                                     break;
 
                                 case 2:
-                                    System.out.println("\n(Listar clientes - em construção)");
+                                    listarClientesTabela(matrizClientes);
                                     break;
 
                                 case 3:
@@ -75,15 +75,15 @@ public class Main_estudantes {
                                     break;
 
                                 case 4:
-                                    System.out.println("\n(Alterar cliente - em construção)");
+                                    alterarCliente(scanner, matrizClientes);
                                     break;
 
                                 case 5:
-                                    System.out.println("\n(Apagar cliente - em construção)");
+                                    matrizClientes = apagarCliente(scanner, matrizClientes);
                                     break;
 
                                 case 6:
-                                    System.out.println("\n(Ordenar por nome - em construção)");
+                                    ordenarClientesPorNome(matrizClientes);
                                     break;
 
                                 case 0:
