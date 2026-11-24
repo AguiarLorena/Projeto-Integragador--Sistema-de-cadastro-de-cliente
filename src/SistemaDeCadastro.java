@@ -71,7 +71,7 @@ public class SistemaDeCadastro {
                                     break;
 
                                 case 3:
-                                    System.out.println("\n(Consultar cliente - em construção)");
+                                    consultarCliente(scanner, matrizClientes);
                                     break;
 
                                 case 4:
@@ -326,9 +326,58 @@ public class SistemaDeCadastro {
         }
     }
 
-    // devolve a posição (linha) do cliente na matriz, ou -1 se não achar
+    /**
+     * Procura um cliente pelo código
+     * Devolve a posição (linha) do cliente na matriz, ou -1 se não achar
+     */
     private static int buscarClientePorCodigo(String[][] matrizClientes, String codigo) {
+        int codigoBuscado;
+
+        // Converte o texto digitado para número; se não for número, não achou
+        try {
+            codigoBuscado = Integer.parseInt(codigo.trim());
+        } catch (NumberFormatException e) {
+            return -1;
+        }
+
+        // Percorre as linhas comparando o código de cada cliente (coluna 0)
+        for (int i = 0; i < matrizClientes.length; i++) {
+            if (Integer.parseInt(matrizClientes[i][0]) == codigoBuscado) {
+                return i; // achou: devolve a posição e encerra a função
+            }
+        }
+
+        // Terminou o for sem achar
         return -1;
+    }
+
+    /**
+     * Consulta um cliente pelo código e mostra a linha dele em formato de tabela
+     */
+    private static void consultarCliente(Scanner scanner, String[][] matrizClientes) {
+        System.out.print("\nDigite o código do cliente: ");
+        String codigo = scanner.nextLine();
+
+        int posicao = buscarClientePorCodigo(matrizClientes, codigo);
+
+        if (posicao == -1) {
+            System.out.println("Cliente não encontrado.");
+            return;
+        }
+
+        System.out.println("\nCliente encontrado:");
+        System.out.println("Código | Nome | CPF/CNPJ | Nascimento | Sexo | Cidade | Estado | Status");
+        System.out.println("--------------------------------------------------------------------------------------------");
+
+        for (int j = 0; j < 8; j++) {
+            System.out.print(matrizClientes[posicao][j]);
+
+            if (j < 7) {
+                System.out.print(" | ");
+            }
+        }
+
+        System.out.println();
     }
 
     private static void alterarCliente(Scanner scanner, String[][] matrizClientes) {
