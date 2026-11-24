@@ -19,8 +19,8 @@ public class Main_estudantes {
      */
     public static void main(String[] args) {
         // Matrizes criadas localmente (não são globais)
-        String[][] matrizClientes = carregarClientesCSV(); // TEMPORÁRIO: só para testar
-        String[][] matrizContatos = carregarContatosCSV(); // TEMPORÁRIO: só para testar
+        String[][] matrizClientes = carregarClientesCSV(); // TEMPORÁRIO: só para teste
+        String[][] matrizContatos = carregarContatosCSV(); // TEMPORÁRIO: só para teste
 
         System.out.println("================================================");
         System.out.println(" SISTEMA DE CADASTRO DE CLIENTES e CONTATOS ");
@@ -285,6 +285,50 @@ public class Main_estudantes {
         }
 
         return novaMatriz;
+    }
+
+    // ========== FUNÇÕES DE CLIENTES ==========
+
+    private static String[][] incluirCliente(Scanner scanner, String[][] matrizClientes) {
+        System.out.println("(incluirCliente - em construção)");
+        return matrizClientes;
+    }
+
+    private static void listarClientesTabela(String[][] matrizClientes) {
+        System.out.println("(listarClientesTabela - em construção)");
+    }
+
+    // devolve a posição (linha) do cliente na matriz, ou -1 se não achar
+    private static int buscarClientePorCodigo(String[][] matrizClientes, String codigo) {
+        return -1;
+    }
+
+    private static void alterarCliente(Scanner scanner, String[][] matrizClientes) {
+        System.out.println("(alterarCliente - em construção)");
+    }
+
+    private static String[][] apagarCliente(Scanner scanner, String[][] matrizClientes) {
+        System.out.println("(apagarCliente - em construção)");
+        return matrizClientes;
+    }
+
+    private static void ordenarClientesPorNome(String[][] matrizClientes) {
+        System.out.println("(ordenarClientesPorNome - em construção)");
+    }
+
+    // ========== FUNÇÕES AUXILIARES ==========
+
+    private static int compararNomeCharPorChar(String nome1, String nome2) {
+        return 0;
+    }
+
+    private static void copiarLinha(String[][] origem, int linhaOrigem, String[][] destino, int linhaDestino) {
+    }
+
+    private static void limparLinha(String[][] matriz, int linha) {
+    }
+
+    private static void trocarLinhas(String[][] matriz, int linha1, int linha2) {
     }
 
 }
