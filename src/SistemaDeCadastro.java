@@ -294,8 +294,36 @@ public class SistemaDeCadastro {
         return matrizClientes;
     }
 
+    /**
+     * Lista todos os clientes em formato de tabela
+     * Um cliente por linha, colunas separadas por " | "
+     */
     private static void listarClientesTabela(String[][] matrizClientes) {
-        System.out.println("(listarClientesTabela - em construção)");
+        System.out.println("\nCódigo | Nome | CPF/CNPJ | Nascimento | Sexo | Cidade | Estado | Status");
+        System.out.println("--------------------------------------------------------------------------------------------");
+
+        // Se não há clientes, avisa e sai da função
+        if (matrizClientes.length == 0) {
+            System.out.println("Nenhum cliente cadastrado.");
+            return;
+        }
+
+        // for de fora: uma volta para cada cliente (linha da matriz)
+        for (int i = 0; i < matrizClientes.length; i++) {
+
+            // for de dentro: uma volta para cada dado do cliente (coluna 0 a 7)
+            for (int j = 0; j < 8; j++) {
+                System.out.print(matrizClientes[i][j]);
+
+                // Coloca o separador entre as colunas, mas não depois da última
+                if (j < 7) {
+                    System.out.print(" | ");
+                }
+            }
+
+            // Terminou as 8 colunas: pula para a linha de baixo
+            System.out.println();
+        }
     }
 
     // devolve a posição (linha) do cliente na matriz, ou -1 se não achar
