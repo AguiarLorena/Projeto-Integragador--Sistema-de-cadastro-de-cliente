@@ -289,8 +289,64 @@ public class SistemaDeCadastro {
 
     // ========== FUNÇÕES DE CLIENTES ==========
 
+    /**
+     * Inclui um novo cliente
+     * O código é gerado automaticamente: maior código da matriz + 1
+     * Devolve a matriz com o cliente novo
+     */
     private static String[][] incluirCliente(Scanner scanner, String[][] matrizClientes) {
-        System.out.println("(incluirCliente - em construção)");
+        System.out.println("\n========== INCLUIR CLIENTE ==========");
+
+        // 1) Acha o maior código que já existe na coluna 0
+        int maior = 0;
+        for (int i = 0; i < matrizClientes.length; i++) {
+            int codigoAtual = Integer.parseInt(matrizClientes[i][0]);
+            if (codigoAtual > maior) {
+                maior = codigoAtual;
+            }
+        }
+
+        // 2) O código do novo cliente é o maior + 1
+        int novoCodigo = maior + 1;
+
+        // 3) Pede os dados do cliente
+        System.out.print("Nome: ");
+        String nome = scanner.nextLine();
+
+        System.out.print("CPF ou CNPJ: ");
+        String cpfCnpj = scanner.nextLine();
+
+        System.out.print("Data de nascimento (dd/mm/aaaa): ");
+        String nascimento = scanner.nextLine();
+
+        System.out.print("Sexo (M/F): ");
+        String sexo = scanner.nextLine();
+
+        System.out.print("Cidade: ");
+        String cidade = scanner.nextLine();
+
+        System.out.print("Estado (ex.: SP): ");
+        String estado = scanner.nextLine();
+
+        System.out.print("Status (ATIVO/INATIVO): ");
+        String status = scanner.nextLine().toUpperCase();
+
+        // 4) Ganha uma linha nova na matriz e preenche a última linha
+        matrizClientes = aumentarMatrizClientes(matrizClientes);
+        int indice = matrizClientes.length - 1;
+
+        matrizClientes[indice][0] = String.valueOf(novoCodigo);
+        matrizClientes[indice][1] = nome;
+        matrizClientes[indice][2] = cpfCnpj;
+        matrizClientes[indice][3] = nascimento;
+        matrizClientes[indice][4] = sexo;
+        matrizClientes[indice][5] = cidade;
+        matrizClientes[indice][6] = estado;
+        matrizClientes[indice][7] = status;
+
+        // 5) Confirma e devolve a matriz nova
+        System.out.println("\nCliente incluído com sucesso! Código: " + novoCodigo);
+
         return matrizClientes;
     }
 
