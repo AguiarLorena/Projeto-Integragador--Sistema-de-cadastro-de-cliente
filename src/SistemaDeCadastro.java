@@ -4,32 +4,39 @@ import java.io.FileReader;
 import java.io.IOException;
 
 /**
- * Sistema de Cadastro de Clientes e Contatos.
- * Matriz de clientes: String[linhas][8 colunas].
- * Matriz de contatos: String[linhas][5 colunas].
+ * Sistema de Cadastro de Clientes e Contatos
+ * Funcionalidade: Carregar e exibir dados de arquivos CSV
+ *
+ *
+ * Estrutura de dados:
+ * - Matriz de Clientes: String[linhas][8 colunas]
+ * - Matriz de Contatos: String[linhas][5 colunas]
  */
 public class SistemaDeCadastro {
 
     /**
-     * main
-     * Cria as matrizes (por enquanto carregadas dos CSVs, só para teste) e chama o menu principal.
+     * Método principal
      */
     public static void main(String[] args) {
-        String[][] matrizClientes = carregarClientesCSV();
-        String[][] matrizContatos = carregarContatosCSV();
+        // Matrizes criadas localmente (não são globais)
+        String[][] matrizClientes = carregarClientesCSV(); // TEMPORÁRIO: só para teste
+        String[][] matrizContatos = carregarContatosCSV(); // TEMPORÁRIO: só para teste
 
         System.out.println("================================================");
         System.out.println(" SISTEMA DE CADASTRO DE CLIENTES e CONTATOS ");
         System.out.println("========================================");
 
+        // Passa as matrizes para o menu principal
         menuPrincipal(matrizClientes, matrizContatos);
 
         System.out.println("\nSistema encerrado. Até logo!");
     }
 
+    // ========== MENU ==========
+
     /**
-     * menuPrincipal
-     * Mostra o menu principal e executa as opções de clientes, contatos e relatórios.
+     * Menu Principal
+     * Permite acessar os módulos de clientes, contatos e relatórios
      */
     private static void menuPrincipal(String[][] matrizClientes, String[][] matrizContatos) {
         int opcao = -1;
@@ -80,10 +87,10 @@ public class SistemaDeCadastro {
                                     break;
 
                                 case 0:
-                                    break;
+                                    break; // volta ao menu principal
 
                                 case -1:
-                                    break;
+                                    break; // entrada inválida, a mensagem já foi mostrada
 
                                 default:
                                     System.out.println("\nOpção inválida! Tente novamente.");
@@ -114,11 +121,12 @@ public class SistemaDeCadastro {
         }
 
         scanner.close();
+
     }
 
     /**
-     * menuClientes
-     * Mostra o menu de clientes e devolve a opção digitada (-1 se for inválida).
+     * Menu de Clientes
+     * Mostra as opções e devolve o número digitado (-1 se for inválido)
      */
     private static int menuClientes(Scanner scanner) {
         System.out.println("\n========== GERENCIAR CLIENTES ==========");
@@ -140,9 +148,11 @@ public class SistemaDeCadastro {
         }
     }
 
+    // ========== FUNÇÕES DE CARREGAMENTO DE DADOS ==========
+
     /**
-     * carregarClientesCSV
-     * Lê o arquivo clientes.csv e devolve a matriz de clientes preenchida.
+     * Carrega clientes do arquivo clientes.csv
+     * Formato: codigo,nome,cpf_cnpj,data_nascimento,sexo,cidade,estado,status
      */
     private static String[][] carregarClientesCSV() {
         String arquivo = "clientes.csv";
@@ -154,25 +164,29 @@ public class SistemaDeCadastro {
             boolean primeiraLinha = true;
 
             while ((linha = br.readLine()) != null) {
+                // Pula o cabeçalho
                 if (primeiraLinha) {
                     primeiraLinha = false;
                     continue;
                 }
 
+                // Divide a linha por vírgula
                 String[] dados = linha.split(",");
 
                 if (dados.length >= 8) {
+                    // Aumenta a matriz em 1 linha
                     matrizClientes = aumentarMatrizClientes(matrizClientes);
                     int indice = matrizClientes.length - 1;
 
-                    matrizClientes[indice][0] = dados[0].trim();
-                    matrizClientes[indice][1] = dados[1].trim();
-                    matrizClientes[indice][2] = dados[2].trim();
-                    matrizClientes[indice][3] = dados[3].trim();
-                    matrizClientes[indice][4] = dados[4].trim();
-                    matrizClientes[indice][5] = dados[5].trim();
-                    matrizClientes[indice][6] = dados[6].trim();
-                    matrizClientes[indice][7] = dados[7].trim().toUpperCase();
+                    // Preenche a nova linha com os dados do CSV
+                    matrizClientes[indice][0] = dados[0].trim(); // codigo
+                    matrizClientes[indice][1] = dados[1].trim(); // nome
+                    matrizClientes[indice][2] = dados[2].trim(); // cpf_cnpj
+                    matrizClientes[indice][3] = dados[3].trim(); // data_nascimento
+                    matrizClientes[indice][4] = dados[4].trim(); // sexo
+                    matrizClientes[indice][5] = dados[5].trim(); // cidade
+                    matrizClientes[indice][6] = dados[6].trim(); // estado
+                    matrizClientes[indice][7] = dados[7].trim().toUpperCase(); // status
 
                     contador++;
                 }
@@ -189,8 +203,8 @@ public class SistemaDeCadastro {
     }
 
     /**
-     * carregarContatosCSV
-     * Lê o arquivo contatos.csv e devolve a matriz de contatos preenchida.
+     * Carrega contatos do arquivo contatos.csv
+     * Formato: codigo_contato,codigo_cliente,tipo,valor,status
      */
     private static String[][] carregarContatosCSV() {
         String arquivo = "contatos.csv";
@@ -202,22 +216,26 @@ public class SistemaDeCadastro {
             boolean primeiraLinha = true;
 
             while ((linha = br.readLine()) != null) {
+                // Pula o cabeçalho
                 if (primeiraLinha) {
                     primeiraLinha = false;
                     continue;
                 }
 
+                // Divide a linha por vírgula
                 String[] dados = linha.split(",");
 
                 if (dados.length >= 5) {
+                    // Aumenta a matriz em 1 linha
                     matrizContatos = aumentarMatrizContatos(matrizContatos);
                     int indice = matrizContatos.length - 1;
 
-                    matrizContatos[indice][0] = dados[0].trim();
-                    matrizContatos[indice][1] = dados[1].trim();
-                    matrizContatos[indice][2] = dados[2].trim();
-                    matrizContatos[indice][3] = dados[3].trim();
-                    matrizContatos[indice][4] = dados[4].trim().toUpperCase();
+                    // Preenche a nova linha com os dados do CSV
+                    matrizContatos[indice][0] = dados[0].trim(); // codigo_contato
+                    matrizContatos[indice][1] = dados[1].trim(); // codigo_cliente
+                    matrizContatos[indice][2] = dados[2].trim(); // tipo
+                    matrizContatos[indice][3] = dados[3].trim(); // valor
+                    matrizContatos[indice][4] = dados[4].trim().toUpperCase(); // status
 
                     contador++;
                 }
@@ -233,11 +251,14 @@ public class SistemaDeCadastro {
         return matrizContatos;
     }
 
+    // ========== FUNÇÕES DE MANIPULAÇÃO DE MATRIZES ==========
+
     /**
-     * aumentarMatrizClientes
-     * Cria uma matriz de clientes com uma linha a mais, copia os dados e devolve a nova matriz.
+     * Aumenta a matriz de clientes em 1 linha
+     * Cria uma nova matriz com uma linha a mais e copia os dados existentes
      */
     private static String[][] aumentarMatrizClientes(String[][] matrizClientes) {
+
         String[][] novaMatriz = new String[matrizClientes.length + 1][8];
 
         for (int i = 0; i < matrizClientes.length; i++) {
@@ -250,10 +271,11 @@ public class SistemaDeCadastro {
     }
 
     /**
-     * aumentarMatrizContatos
-     * Cria uma matriz de contatos com uma linha a mais, copia os dados e devolve a nova matriz.
+     * Aumenta a matriz de contatos em 1 linha
+     * Cria uma nova matriz com uma linha a mais e copia os dados existentes
      */
     private static String[][] aumentarMatrizContatos(String[][] matrizContatos) {
+
         String[][] novaMatriz = new String[matrizContatos.length + 1][5];
 
         for (int i = 0; i < matrizContatos.length; i++) {
@@ -265,13 +287,17 @@ public class SistemaDeCadastro {
         return novaMatriz;
     }
 
+    // ========== FUNÇÕES DE CLIENTES ==========
+
     /**
-     * incluirCliente
-     * Pede os dados de um novo cliente, gera o código automático e devolve a matriz com o cliente incluído.
+     * Inclui um novo cliente
+     * O código é gerado automaticamente: maior código da matriz + 1
+     * Devolve a matriz com o cliente novo
      */
     private static String[][] incluirCliente(Scanner scanner, String[][] matrizClientes) {
         System.out.println("\n========== INCLUIR CLIENTE ==========");
 
+        // 1) Acha o maior código que já existe na coluna 0
         int maior = 0;
         for (int i = 0; i < matrizClientes.length; i++) {
             int codigoAtual = Integer.parseInt(matrizClientes[i][0]);
@@ -280,8 +306,10 @@ public class SistemaDeCadastro {
             }
         }
 
+        // 2) O código do novo cliente é o maior + 1
         int novoCodigo = maior + 1;
 
+        // 3) Pede os dados do cliente
         System.out.print("Nome: ");
         String nome = scanner.nextLine();
 
@@ -303,6 +331,7 @@ public class SistemaDeCadastro {
         System.out.print("Status (ATIVO/INATIVO): ");
         String status = scanner.nextLine().toUpperCase();
 
+        // 4) Ganha uma linha nova na matriz e preenche a última linha
         matrizClientes = aumentarMatrizClientes(matrizClientes);
         int indice = matrizClientes.length - 1;
 
@@ -315,62 +344,71 @@ public class SistemaDeCadastro {
         matrizClientes[indice][6] = estado;
         matrizClientes[indice][7] = status;
 
+        // 5) Confirma e devolve a matriz nova
         System.out.println("\nCliente incluído com sucesso! Código: " + novoCodigo);
 
         return matrizClientes;
     }
 
     /**
-     * listarClientesTabela
-     * Mostra todos os clientes em formato de tabela, um cliente por linha.
+     * Lista todos os clientes em formato de tabela
+     * Um cliente por linha, colunas separadas por " | "
      */
     private static void listarClientesTabela(String[][] matrizClientes) {
         System.out.println("\nCódigo | Nome | CPF/CNPJ | Nascimento | Sexo | Cidade | Estado | Status");
         System.out.println("--------------------------------------------------------------------------------------------");
 
+        // Se não há clientes, avisa e sai da função
         if (matrizClientes.length == 0) {
             System.out.println("Nenhum cliente cadastrado.");
             return;
         }
 
+        // for de fora: uma volta para cada cliente (linha da matriz)
         for (int i = 0; i < matrizClientes.length; i++) {
+
+            // for de dentro: uma volta para cada dado do cliente (coluna 0 a 7)
             for (int j = 0; j < 8; j++) {
                 System.out.print(matrizClientes[i][j]);
 
+                // Coloca o separador entre as colunas, mas não depois da última
                 if (j < 7) {
                     System.out.print(" | ");
                 }
             }
 
+            // Terminou as 8 colunas: pula para a linha de baixo
             System.out.println();
         }
     }
 
     /**
-     * buscarClientePorCodigo
-     * Procura um cliente pelo código e devolve a posição dele na matriz, ou -1 se não achar.
+     * Procura um cliente pelo código
+     * Devolve a posição (linha) do cliente na matriz, ou -1 se não achar
      */
     private static int buscarClientePorCodigo(String[][] matrizClientes, String codigo) {
         int codigoBuscado;
 
+        // Converte o texto digitado para número; se não for número, não achou
         try {
             codigoBuscado = Integer.parseInt(codigo.trim());
         } catch (NumberFormatException e) {
             return -1;
         }
 
+        // Percorre as linhas comparando o código de cada cliente (coluna 0)
         for (int i = 0; i < matrizClientes.length; i++) {
             if (Integer.parseInt(matrizClientes[i][0]) == codigoBuscado) {
-                return i;
+                return i; // achou: devolve a posição e encerra a função
             }
         }
 
+        // Terminou o for sem achar
         return -1;
     }
 
     /**
-     * consultarCliente
-     * Pede o código de um cliente e mostra os dados dele em formato de tabela.
+     * Consulta um cliente pelo código e mostra a linha dele em formato de tabela
      */
     private static void consultarCliente(Scanner scanner, String[][] matrizClientes) {
         System.out.print("\nDigite o código do cliente: ");
@@ -399,18 +437,23 @@ public class SistemaDeCadastro {
     }
 
     /**
-     * alterarCliente
-     * Lista os clientes, pede o código, mostra o cliente encontrado e pede confirmação (S/N) para alterar.
+     * Altera um cliente
+     * Lista os clientes, pergunta qual alterar, mostra o cliente encontrado,
+     * pede a confirmação (S/N) e grava os novos dados na linha dele.
+     * Não devolve matriz: só muda valores de uma linha, não o tamanho.
      */
     private static void alterarCliente(Scanner scanner, String[][] matrizClientes) {
         System.out.println("\n========== ALTERAR CLIENTE ==========");
 
+        // 1) Mostra todos os clientes para a pessoa escolher
         listarClientesTabela(matrizClientes);
 
+        // Se não há clientes, não tem o que alterar
         if (matrizClientes.length == 0) {
             return;
         }
 
+        // 2) Pergunta o código e procura o cliente
         System.out.print("\nQual cliente deseja alterar => ");
         String codigo = scanner.nextLine();
 
@@ -421,6 +464,7 @@ public class SistemaDeCadastro {
             return;
         }
 
+        // 3) Mostra só o cliente encontrado, em tabela
         System.out.println("\nCliente encontrado:");
         System.out.println("Código | Nome | CPF/CNPJ | Nascimento | Sexo | Cidade | Estado | Status");
         System.out.println("--------------------------------------------------------------------------------------------");
@@ -435,6 +479,7 @@ public class SistemaDeCadastro {
 
         System.out.println();
 
+        // 4) Pede a confirmação: só continua se a resposta começar com S
         System.out.print("\nDeseja alterar este cliente? (S/N) ");
         String resposta = scanner.nextLine().toUpperCase();
 
@@ -443,52 +488,63 @@ public class SistemaDeCadastro {
             return;
         }
 
-        System.out.println("(alterarCliente - em construção)");
+        // 5) Pede os novos dados (o código do cliente não muda)
+        System.out.println("\nDigite os novos dados:");
+
+        System.out.print("Nome: ");
+        String nome = scanner.nextLine();
+
+        System.out.print("CPF ou CNPJ: ");
+        String cpfCnpj = scanner.nextLine();
+
+        System.out.print("Data de nascimento (dd/mm/aaaa): ");
+        String nascimento = scanner.nextLine();
+
+        System.out.print("Sexo (M/F): ");
+        String sexo = scanner.nextLine();
+
+        System.out.print("Cidade: ");
+        String cidade = scanner.nextLine();
+
+        System.out.print("Estado (ex.: SP): ");
+        String estado = scanner.nextLine();
+
+        System.out.print("Status (ATIVO/INATIVO): ");
+        String status = scanner.nextLine().toUpperCase();
+
+        // 6) Grava os novos dados na linha do cliente (colunas 1 a 7)
+        matrizClientes[posicao][1] = nome;
+        matrizClientes[posicao][2] = cpfCnpj;
+        matrizClientes[posicao][3] = nascimento;
+        matrizClientes[posicao][4] = sexo;
+        matrizClientes[posicao][5] = cidade;
+        matrizClientes[posicao][6] = estado;
+        matrizClientes[posicao][7] = status;
+
+        System.out.println("\nCliente alterado com sucesso!");
     }
 
-    /**
-     * apagarCliente
-     * Apaga um cliente (em construção).
-     */
     private static String[][] apagarCliente(Scanner scanner, String[][] matrizClientes) {
         System.out.println("(apagarCliente - em construção)");
         return matrizClientes;
     }
 
-    /**
-     * ordenarClientesPorNome
-     * Ordena os clientes pelo nome (em construção).
-     */
     private static void ordenarClientesPorNome(String[][] matrizClientes) {
         System.out.println("(ordenarClientesPorNome - em construção)");
     }
 
-    /**
-     * compararNomeCharPorChar
-     * Compara dois nomes letra por letra (em construção).
-     */
+    // ========== FUNÇÕES AUXILIARES ==========
+
     private static int compararNomeCharPorChar(String nome1, String nome2) {
         return 0;
     }
 
-    /**
-     * copiarLinha
-     * Copia uma linha de uma matriz para outra (em construção).
-     */
     private static void copiarLinha(String[][] origem, int linhaOrigem, String[][] destino, int linhaDestino) {
     }
 
-    /**
-     * limparLinha
-     * Apaga os dados de uma linha da matriz (em construção).
-     */
     private static void limparLinha(String[][] matriz, int linha) {
     }
 
-    /**
-     * trocarLinhas
-     * Troca duas linhas de lugar na matriz (em construção).
-     */
     private static void trocarLinhas(String[][] matriz, int linha1, int linha2) {
     }
 
